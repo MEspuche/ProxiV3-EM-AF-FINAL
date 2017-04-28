@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Liste des Clients</title>
+</h:head>
+<h:messages></h:messages>
+<h:body>
+<p:panel>
+<h:form>
+<h:commandButton type="submit" value="Deconnexion"
+				action="#{mBeanLogin.deconnexion}"></h:commandButton>
+
+				</h:form>
+				</p:panel>
+				<br/>
+
+<p:panel header="Liste des clients">
+	<h:form>
+
+		<p:dataTable value="#{mBeanListeClients.listClients(mBeanLogin.conseiller)}" var="leClient" border="1"
+			width="200" cellpadding="5">
+			
+			<p:column>
+				<f:facet name="header">ID</f:facet>
+	#{leClient.id}
+	</p:column>
+			<p:column>
+				<f:facet name="header">Nom</f:facet>
+	#{leClient.nom}
+	</p:column>
+			<p:column>
+				<f:facet name="header">Prenom</f:facet>
+	#{leClient.prenom}
+	</p:column>
+	<p:column>
+				<f:facet name="header">nomEntreprise</f:facet>
+	#{leClient.nomEntreprise}
+	</p:column>
+			<p:column>
+				<f:facet name="header">Afficher</f:facet>
+				<p:commandLink update="@form" value="Afficher"
+					action="#{mBeanListeClients.afficherClient(leClient)}">
+					<f:setPropertyActionListener value="#{leClient}" target="#{mBeanListeClients.client}"/>
+					</p:commandLink>
+
+
+
+
+
+
+			</p:column>
+		</p:dataTable>
+
+
+<br/>
+			
+			
+			
+
+	</h:form>
+	</p:panel>
+</h:body>
+</h:html>

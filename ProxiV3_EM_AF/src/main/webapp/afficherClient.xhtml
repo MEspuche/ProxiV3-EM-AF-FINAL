@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Afficher Client</title>
+</h:head>
+<h:messages></h:messages>
+<h:body>
+<p:panel>
+<h:form>
+<h:panelGrid columns="2" cellpadding="5">
+<h:commandButton type="submit" value="Retour Liste Client" action="listeClients"></h:commandButton>
+<h:commandButton type="submit" value="Deconnexion"
+				action="#{mBeanLogin.deconnexion}"></h:commandButton>
+				</h:panelGrid>
+				</h:form>
+				</p:panel>
+				<br/>
+			
+	<p:panel header="client">
+		<br />
+		<br />
+		
+		<h:form>
+		<p:panel>
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="Nom :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.nom}" />
+				<h:outputText value="Prenom :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.prenom}" />
+				<h:outputText value="Adresse :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.adresse}" />
+				<h:outputText value="Code Postal :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.codePostal}" />
+				<h:outputText value="Ville :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.ville}" />
+				<h:outputText value="Telephone :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.telephone}" />
+				<h:outputText value="Email :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.email}" />
+				<h:outputText value="Nom de l'entreprise :" style="font-weight:bold" />
+				<h:outputText value="#{mBeanListeClients.client.nomEntreprise}" />
+			</h:panelGrid>
+			</p:panel>		
+			<br />
+			<br />
+			
+			<h:panelGrid columns="2" cellpadding="5">
+			<h:commandButton type="submit" value="Modifier" action="modifierClient"></h:commandButton>
+			
+			
+					
+					</h:panelGrid>
+
+			<br />
+			<br />
+			<br />
+
+		</h:form>
+<!-- 		<p:panel header="Comptes client"> -->
+
+
+
+
+			<p:tabView>
+				<p:tab title="Compte Courant">
+					<h:form>
+
+						<p:dataTable
+							value="#{mBeanAfficherClient.afficherCompteCourantClient(mBeanLogin.conseiller, mBeanListeClients.client)}"
+							var="leCompte" border="1" width="200" cellpadding="5">
+
+							<p:column>
+								<f:facet name="header">numero de Compte</f:facet>
+	#{leCompte.numeroCompte}
+	</p:column>
+							<p:column>
+								<f:facet name="header">Solde</f:facet>
+	#{leCompte.solde}
+	</p:column>
+							<p:column>
+								<f:facet name="header">Date d'ouverture</f:facet>
+	#{leCompte.dateOuverture}
+	</p:column>
+								<p:column>
+											<f:facet name="header">decouvert</f:facet>
+								#{leCompte.decouvert}
+								</p:column>
+							<!-- 	<p:column> -->
+							<!-- 				<f:facet name="header">remuneration</f:facet> -->
+							<!-- 	#{leCompte.remuneration} -->
+							<!-- 	</p:column> -->
+							<p:column>
+								<f:facet name="header">Effectuer Virement</f:facet>
+								<p:commandLink value="virement"
+									action="#{mBeanAfficherClient.virement(leCompte)}">
+									<f:setPropertyActionListener value="#{leCompte}"
+										target="#{mBeanAfficherClient.compte}"></f:setPropertyActionListener>
+								</p:commandLink>
+
+							</p:column>
+						</p:dataTable>
+
+					</h:form>
+				</p:tab>
+				<p:tab title="Compte Epargne">
+					<h:form>
+
+						<p:dataTable
+							value="#{mBeanAfficherClient.afficherCompteEpargneClient(mBeanLogin.conseiller, mBeanListeClients.client)}"
+							var="leCompte" border="1" width="200" cellpadding="5">
+
+							<p:column>
+								<f:facet name="header">numero de Compte</f:facet>
+	#{leCompte.numeroCompte}
+	</p:column>
+							<p:column>
+								<f:facet name="header">Solde</f:facet>
+	#{leCompte.solde}
+	</p:column>
+							<p:column>
+								<f:facet name="header">Date d'ouverture</f:facet>
+	#{leCompte.dateOuverture}
+	</p:column>
+							<!-- 	<p:column> -->
+							<!-- 				<f:facet name="header">decouvert</f:facet> -->
+							<!-- 	#{leCompte.decouvert} -->
+							<!-- 	</p:column> -->
+								<p:column>
+											<f:facet name="header">remuneration</f:facet>
+								#{leCompte.remuneration}
+								</p:column>
+							<p:column>
+								<f:facet name="header">Effectuer Virement</f:facet>
+								<p:commandLink value="virement"
+									action="#{mBeanAfficherClient.virement(leCompte)}">
+									<f:setPropertyActionListener value="#{leCompte}"
+										target="#{mBeanAfficherClient.compte}"></f:setPropertyActionListener>
+								</p:commandLink>
+
+							</p:column>
+						</p:dataTable>
+
+					</h:form>
+					</p:tab>
+			</p:tabView>
+		</p:panel>
+
+<!-- 	</p:panel> -->
+
+
+</h:body>
+</h:html>

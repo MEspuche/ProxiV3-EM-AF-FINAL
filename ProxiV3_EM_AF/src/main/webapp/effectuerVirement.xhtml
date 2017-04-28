@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Effectuer un virement</title>
+</h:head>
+
+
+<h:messages></h:messages>
+<h:body>
+<p:panel>
+<h:form>
+<h:panelGrid columns="2" cellpadding="5">
+<h:commandButton type="submit" value="Retour Liste Client" action="listeClients"></h:commandButton>
+<h:commandButton type="submit" value="Deconnexion"
+				action="#{mBeanLogin.deconnexion}"></h:commandButton>
+				</h:panelGrid>
+				</h:form>
+				</p:panel>
+				<br/>
+			
+	<p:panel header="Virement">
+
+		<h:form>
+			<p:panel header="Compte a debiter">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputText value="Numero de Compte :" style="font-weight:bold" />
+					<h:outputText value="#{mBeanAfficherClient.compte.numeroCompte}" />
+					<h:outputText value="Solde :" style="font-weight:bold" />
+					<h:outputText value="#{mBeanAfficherClient.compte.solde}" />
+
+				</h:panelGrid>
+			</p:panel>
+<br/>
+			<p:panel header="Compte a crediter">
+
+
+				<p:dataTable value="#{mBeanEffectuerVirement.colCompte(mBeanAfficherClient.compte)}"
+					var="lecompte" border="1" width="200" cellpadding="5">
+
+					<p:column>
+						<f:facet name="header">Numeros de Compte</f:facet>
+	#{lecompte.numeroCompte}
+	</p:column>
+					<p:column>
+						<f:facet name="header">Solde</f:facet>
+	#{lecompte.solde}
+	</p:column>
+
+					<p:column>
+						<f:facet name="header">Selectionner</f:facet>
+						<p:commandLink update="@form" value="Selectionner"
+							action="#{mBeanEffectuerVirement.virement(lecompte)}">
+							<f:setPropertyActionListener value="#{lecompte}"
+								target="#{mBeanEffectuerVirement.compteCred}" />
+						</p:commandLink>
+
+					</p:column>
+				</p:dataTable>
+
+
+			</p:panel>
+			<br/>
+			<br/>
+			<h:commandButton type="submit" value="Annuler" action="afficherClient"></h:commandButton>
+
+		</h:form>
+	</p:panel>
+</h:body>
+</h:html>
